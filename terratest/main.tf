@@ -104,7 +104,7 @@ locals {
 sudo apt-get update --yes
 sudo apt-get upgrade --yes
 sudo apt-get install --yes nginx
-echo '${var.value}' | sudo tee /var/www/html/file.txt
+echo -n '${var.value}' | sudo tee /var/www/html/file.txt
 SCRIPT
 }
 
