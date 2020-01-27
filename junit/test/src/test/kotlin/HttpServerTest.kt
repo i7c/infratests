@@ -1,5 +1,5 @@
-import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.matchesRegex
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
@@ -9,11 +9,8 @@ import java.net.URL
 
 class HttpServerTest {
     companion object {
-        private val message: String = "The Answer is forty two!"
         private val workingDir = File("..")
-        private val variables = mapOf(
-            "value" to message
-        )
+        private val variables = emptyMap<String, Any>()
 
         @BeforeAll
         @JvmStatic
@@ -36,12 +33,12 @@ class HttpServerTest {
 
     @Test
     fun `Make sure HTTP Server is reachable`() {
-        val ip = cd(workingDir) { bashCaptureOutput { "terraform output ip_address" } }.trim()
+        val hostName = cd(workingDir) { bashCaptureOutput { "terraform output default_site_hostname" } }.trim()
 
-        val content = with(URL("http://$ip/file.txt").openConnection() as HttpURLConnection) {
+        val content = with(URL("http://$hostName").openConnection() as HttpURLConnection) {
             inputStream.bufferedReader().use { it.readLines() }.joinToString("\n")
         }
 
-        assertThat(content, equalTo(message))
+        assertThat(content, matchesRegex(".*HTTP Hello World.*Hello from .*"))
     }
 }
