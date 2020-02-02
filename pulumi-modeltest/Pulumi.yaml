@@ -1,0 +1,3 @@
+name: pulumi-modeltest
+runtime: nodejs
+description: Modeltests with pulumi
