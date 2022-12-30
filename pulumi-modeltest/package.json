@@ -4,6 +4,6 @@
     "dependencies": {
         "@pulumi/azure": "^1.0.0",
         "@pulumi/pulumi": "^1.0.0",
-        "mocha": "^7.0.1"
+        "mocha": "^10.2.0"
     }
 }
